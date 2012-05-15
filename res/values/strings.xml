@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Signup_sample_fragmentActivity!</string>
+    <string name="app_name">Signup_sample_fragment</string>
+
+</resources>
