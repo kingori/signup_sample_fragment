@@ -3,7 +3,7 @@ package kr.pe.kingori.sample.signup;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,8 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -62,7 +62,7 @@ public class MainActivity extends FragmentActivity {
 	private void showNextFragment(SingupFragment nextFragment) {
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(R.id.singup_main, nextFragment);
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		ft.setTransition(FragmentTransaction.TRANSIT_ENTER_MASK);
 		ft.addToBackStack(null);
 		ft.commit();
 	}
@@ -132,7 +132,7 @@ public class MainActivity extends FragmentActivity {
 		public void onResume() {
 			super.onResume();
 			etName.requestFocus();
-			showKeyboard(getActivity(), etName);
+			showKeyboard(getActivity());
 		}
 
 		@Override
@@ -196,7 +196,7 @@ public class MainActivity extends FragmentActivity {
 		public void onResume() {
 			super.onResume();
 			etHobby.requestFocus();
-			showKeyboard(getActivity(), etHobby);
+			showKeyboard(getActivity());
 		}
 
 		@Override
@@ -257,7 +257,7 @@ public class MainActivity extends FragmentActivity {
 		public void onResume() {
 			super.onResume();
 			etAddr.requestFocus();
-			showKeyboard(getActivity(), etAddr);
+			showKeyboard(getActivity());
 		}
 
 		@Override
@@ -307,6 +307,8 @@ public class MainActivity extends FragmentActivity {
 				Log.d("test", "detach");
 				saveData();
 			}
+			
+			userFragment = null;
 			super.onDetach();
 		}
 
@@ -343,12 +345,14 @@ public class MainActivity extends FragmentActivity {
 	 * @param ctx
 	 * @param view
 	 */
-	public static void showKeyboard(Context ctx, View view) {
-		try {
-			InputMethodManager mgr = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-			mgr.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-		} catch (Throwable e) {
-			Log.w("sample", e);
-		}
+	public static void showKeyboard(Activity act) {
+		act.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		
+//		try {
+//			InputMethodManager mgr = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+//			mgr.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+//		} catch (Throwable e) {
+//			Log.w("sample", e);
+//		}
 	}
 }
